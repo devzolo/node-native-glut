@@ -28,6 +28,8 @@
 #include <GL/freeglut.h>
 #include "../fg_internal.h"
 
+extern void movementDummyWindowInit(HWND hFocusWindow);
+extern void movementDummyWindowStartWindowMovement();
 extern void fghRedrawWindow ( SFG_Window *window );
 extern void fghRedrawWindowAndChildren ( SFG_Window *window );
 extern void fghOnReshapeNotify(SFG_Window *window, int width, int height, GLboolean forceNotify);
@@ -845,6 +847,8 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 #if !defined(_WIN32_WCE)
             fgNewWGLCreateContext( window );
 #endif
+
+            movementDummyWindowInit(window->Window.Handle);
         }
 
         ReleaseDC( window->Window.Handle, window->Window.pContext.Device );
@@ -1409,6 +1413,12 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 
     case WM_SYSCOMMAND :  /* 0x0112 */
         {
+
+          if (wParam == 0xF012)            // SC_DRAGMOVE
+          {
+              movementDummyWindowStartWindowMovement();
+              break;
+          }
           /*
            * We have received a system command message.  Try to act on it.
            * The commands are passed in through the "wParam" parameter:

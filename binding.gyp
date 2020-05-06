@@ -49,6 +49,8 @@
         "deps/freeglut-3.2.1/src/fg_font.c",
         "deps/freeglut-3.2.1/src/fg_menu.c",
 
+        "deps/freeglut-3.2.1/src/mswin/fg_movement_dummy_window.c", #CUSTOM
+
         "deps/freeglut-3.2.1/src/mswin/fg_cursor_mswin.c",
         "deps/freeglut-3.2.1/src/mswin/fg_display_mswin.c",
         "deps/freeglut-3.2.1/src/mswin/fg_ext_mswin.c",
