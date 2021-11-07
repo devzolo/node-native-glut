@@ -1,4 +1,4 @@
-declare module 'native-glut' {
+declare module '@devzolo/node-native-glut' {
   export namespace GLUT {
     /*
      * The freeglut and GLUT API versions

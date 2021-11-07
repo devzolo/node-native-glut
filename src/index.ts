@@ -3,7 +3,7 @@ export const GLUT = require(path.join(__dirname, '..', 'bin', process.platform, 
 
 GLUT.mainLoop = async function(): Promise<void> {
   GLUT.mainLoopBegin();
-  await new Promise(resolve => {
+  await new Promise<void>(resolve => {
     const mainLoop = (): void => {
       if (GLUT.execState() === GLUT.EXEC_STATE_STOP) {
         resolve();
