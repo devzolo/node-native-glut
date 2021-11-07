@@ -31,8 +31,8 @@
     "host": "https://github.com/devzolo/node-native-glut"
   },
   "dependencies": {
-    "node-addon-api": "^4.2.0",
-    "node-pre-gyp": "^0.17.0"
+    "@mapbox/node-pre-gyp": "^1.0.6",
+    "node-addon-api": "^4.2.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
@@ -44,7 +44,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.3.1",
-    "nodemon": "^2.0.14",
     "prettier": "^2.4.1",
     "ts-jest": "^27.0.7",
     "ts-node": "^10.4.0",
