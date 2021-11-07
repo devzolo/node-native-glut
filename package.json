@@ -1,10 +1,39 @@
 {
-  "name": "native-glut",
-  "version": "0.0.1",
+  "name": "@devzolo/node-native-glut",
+  "version": "1.0.0",
   "main": "dist",
-  "repository": "https://github.com/devzolo/node-native-glut.git",
   "author": "Raphael-ZoLo <zolotorevsky@gmail.com>",
   "license": "MIT",
+  "repository": "https://github.com/devzolo/node-native-glut",
+  "publishConfig": {
+    "@devzolo:registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "install": "node-pre-gyp install --fallback-to-build",
+    "build": "node-pre-gyp install --build-from-source",
+    "dist": "tsc",
+    "package": "tsc&&node-pre-gyp install --build-from-source&&jest&&./node_modules/.bin/node-pre-gyp build package",
+    "test": "jest --coverage",
+    "sources": "deps-source",
+    "dev": "nodemon",
+    "start": "ts-node src"
+  },
+  "deps": {
+    "freeglut-3.2.1": {
+      "url": "https://razaoinfo.dl.sourceforge.net/project/freeglut/freeglut/3.2.1/freeglut-3.2.1.tar.gz"
+    }
+  },
+  "binary": {
+    "module_name": "native-glut",
+    "module_path": "./bin/{platform}/{arch}/",
+    "remote_path": "./releases/download/v{version}/",
+    "package_name": "{module_name}-v{version}-{platform}-{arch}.tar.gz",
+    "host": "https://github.com/devzolo/node-native-glut"
+  },
+  "dependencies": {
+    "node-addon-api": "^2.0.0",
+    "node-pre-gyp": "^0.14.0"
+  },
   "devDependencies": {
     "@types/jest": "^25.1.2",
     "@types/node": "^13.7.1",
@@ -20,31 +49,5 @@
     "ts-jest": "^25.2.0",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
-  },
-  "dependencies": {
-    "node-addon-api": "^2.0.0",
-    "node-pre-gyp": "^0.14.0"
-  },
-  "deps": {
-    "freeglut-3.2.1": {
-      "url": "https://razaoinfo.dl.sourceforge.net/project/freeglut/freeglut/3.2.1/freeglut-3.2.1.tar.gz"
-    }
-  },
-  "binary": {
-    "module_name": "native-glut",
-    "module_path": "./bin/{platform}/{arch}/",
-    "remote_path": "./releases/download/v{version}/",
-    "package_name": "{module_name}-v{version}-{platform}-{arch}.tar.gz",
-    "host": "https://github.com/devzolo/node-native-glut"
-  },
-  "scripts": {
-    "install": "node-pre-gyp install --fallback-to-build",
-    "build": "node-pre-gyp install --build-from-source",
-    "dist": "tsc",
-    "package": "tsc&&node-pre-gyp install --build-from-source&&jest&&./node_modules/.bin/node-pre-gyp build package",
-    "test": "jest --coverage",
-    "sources": "deps-source",
-    "dev": "nodemon",
-    "start": "ts-node src"
   }
 }
