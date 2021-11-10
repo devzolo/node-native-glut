@@ -20,21 +20,21 @@ jobs:
           scope: '@devzolo'
       - run: npm install
       #- run: yarn test
-      - run: npm run build
-      - name: Delete Old Package
-        uses: actions/delete-package-versions@v1
-        with:
-          package-name: 'node-native-glut'
+      # - run: npm run build
+      # - name: Delete Old Package
+      #   uses: actions/delete-package-versions@v1
+      #   with:
+      #     package-name: 'node-native-glut'
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: Delete Old Release
-        uses: dev-drprasad/delete-tag-and-release@v0.2.0
-        with:
-          delete_release: true
-          tag_name: main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Delete Old Release
+      #   uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      #   with:
+      #     delete_release: true
+      #     tag_name: main
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Archive Release
       #   run: npm pack
       #   uses: thedoctor0/zip-release@master
