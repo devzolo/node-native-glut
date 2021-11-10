@@ -8,26 +8,30 @@
   "publishConfig": {
     "@devzolo:registry": "https://npm.pkg.github.com"
   },
-  "scripts": {
-    "install": "node-pre-gyp install --fallback-to-build",
-    "build": "node-pre-gyp install --build-from-source",
-    "postbuild": "tsc",
-    "dist": "tsc",
-    "package": "tsc&&node-pre-gyp install --build-from-source&&jest&&./node_modules/.bin/node-pre-gyp build package",
-    "test": "jest --coverage",
-    "sources": "deps-source"
-  },
-  "deps": {
-    "freeglut-3.2.1": {
-      "url": "https://razaoinfo.dl.sourceforge.net/project/freeglut/freeglut/3.2.1/freeglut-3.2.1.tar.gz"
-    }
-  },
+  "files": [
+    "dist",
+    "bin"
+  ],
   "binary": {
     "module_name": "native-glut",
     "module_path": "./bin/{platform}/{arch}/",
     "remote_path": "./releases/download/v{version}/",
     "package_name": "{module_name}-v{version}-{platform}-{arch}.tar.gz",
     "host": "https://github.com/devzolo/node-native-glut"
+  },
+  "deps": {
+    "freeglut-3.2.1": {
+      "url": "https://razaoinfo.dl.sourceforge.net/project/freeglut/freeglut/3.2.1/freeglut-3.2.1.tar.gz"
+    }
+  },
+  "scripts": {
+    "install_old": "node-pre-gyp install --fallback-to-build",
+    "build": "node-pre-gyp install --build-from-source",
+    "postbuild": "tsc",
+    "dist": "tsc",
+    "package": "tsc&&node-pre-gyp install --build-from-source&&jest&&./node_modules/.bin/node-pre-gyp build package",
+    "test": "jest --coverage",
+    "sources": "deps-source"
   },
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.6",
