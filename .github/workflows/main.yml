@@ -35,8 +35,8 @@ jobs:
           tag_name: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Archive Release
-        run: npm pack
+      # - name: Archive Release
+      #   run: npm pack
       #   uses: thedoctor0/zip-release@master
       #   with:
       #     type: 'tar'
