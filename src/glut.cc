@@ -568,7 +568,7 @@ Napi::FunctionReference m_keyboardFuncCBRef;
 void m_keyboardFunc(unsigned char key, int x, int y) {
   if(!m_keyboardFuncCBRef.IsEmpty()) {
     m_keyboardFuncCBRef.Call({
-      Napi::Number::New(m_keyboardFuncCBRef.Env(), key),
+      Napi::String::New(m_keyboardFuncCBRef.Env(), (char*)&key),
       Napi::Number::New(m_keyboardFuncCBRef.Env(), x),
       Napi::Number::New(m_keyboardFuncCBRef.Env(), y)
     });
