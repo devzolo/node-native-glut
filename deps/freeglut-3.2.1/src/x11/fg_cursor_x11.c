@@ -34,64 +34,67 @@
 /*
  * A factory method for an empty cursor
  */
-static Cursor getEmptyCursor( void )
+static Cursor getEmptyCursor(void)
 {
     static Cursor cursorNone = None;
-    if( cursorNone == None ) {
-        char cursorNoneBits[ 32 ];
+    if (cursorNone == None)
+    {
+        char cursorNoneBits[32];
         XColor dontCare;
         Pixmap cursorNonePixmap;
-        memset( cursorNoneBits, 0, sizeof( cursorNoneBits ) );
-        memset( &dontCare, 0, sizeof( dontCare ) );
-        cursorNonePixmap = XCreateBitmapFromData ( fgDisplay.pDisplay.Display,
-                                                   fgDisplay.pDisplay.RootWindow,
-                                                   cursorNoneBits, 16, 16 );
-        if( cursorNonePixmap != None ) {
-            cursorNone = XCreatePixmapCursor( fgDisplay.pDisplay.Display,
-                                              cursorNonePixmap, cursorNonePixmap,
-                                              &dontCare, &dontCare, 0, 0 );
-            XFreePixmap( fgDisplay.pDisplay.Display, cursorNonePixmap );
+        memset(cursorNoneBits, 0, sizeof(cursorNoneBits));
+        memset(&dontCare, 0, sizeof(dontCare));
+        cursorNonePixmap = XCreateBitmapFromData(fgDisplay.pDisplay.Display,
+                                                 fgDisplay.pDisplay.RootWindow,
+                                                 cursorNoneBits, 16, 16);
+        if (cursorNonePixmap != None)
+        {
+            cursorNone = XCreatePixmapCursor(fgDisplay.pDisplay.Display,
+                                             cursorNonePixmap, cursorNonePixmap,
+                                             &dontCare, &dontCare, 0, 0);
+            XFreePixmap(fgDisplay.pDisplay.Display, cursorNonePixmap);
         }
     }
     return cursorNone;
 }
 
 typedef struct tag_cursorCacheEntry cursorCacheEntry;
-struct tag_cursorCacheEntry {
-    unsigned int cursorShape;    /* an XC_foo value */
-    Cursor cachedCursor;         /* None if the corresponding cursor has
+struct tag_cursorCacheEntry
+{
+    unsigned int cursorShape; /* an XC_foo value */
+    Cursor cachedCursor;      /* None if the corresponding cursor has
                                     not been created yet */
-	Display *dpy;	/* display used to allocate this cursor */
+    Display *dpy;             /* display used to allocate this cursor */
 };
 
 /*
  * Note: The arrangement of the table below depends on the fact that
  * the "normal" GLUT_CURSOR_* values start a 0 and are consecutive.
- */ 
+ */
 static cursorCacheEntry cursorCache[] = {
-    { XC_arrow,               None, 0 }, /* GLUT_CURSOR_RIGHT_ARROW */
-    { XC_top_left_arrow,      None, 0 }, /* GLUT_CURSOR_LEFT_ARROW */
-    { XC_hand1,               None, 0 }, /* GLUT_CURSOR_INFO */
-    { XC_pirate,              None, 0 }, /* GLUT_CURSOR_DESTROY */
-    { XC_question_arrow,      None, 0 }, /* GLUT_CURSOR_HELP */
-    { XC_exchange,            None, 0 }, /* GLUT_CURSOR_CYCLE */
-    { XC_spraycan,            None, 0 }, /* GLUT_CURSOR_SPRAY */
-    { XC_watch,               None, 0 }, /* GLUT_CURSOR_WAIT */
-    { XC_xterm,               None, 0 }, /* GLUT_CURSOR_TEXT */
-    { XC_crosshair,           None, 0 }, /* GLUT_CURSOR_CROSSHAIR */
-    { XC_sb_v_double_arrow,   None, 0 }, /* GLUT_CURSOR_UP_DOWN */
-    { XC_sb_h_double_arrow,   None, 0 }, /* GLUT_CURSOR_LEFT_RIGHT */
-    { XC_top_side,            None, 0 }, /* GLUT_CURSOR_TOP_SIDE */
-    { XC_bottom_side,         None, 0 }, /* GLUT_CURSOR_BOTTOM_SIDE */
-    { XC_left_side,           None, 0 }, /* GLUT_CURSOR_LEFT_SIDE */
-    { XC_right_side,          None, 0 }, /* GLUT_CURSOR_RIGHT_SIDE */
-    { XC_top_left_corner,     None, 0 }, /* GLUT_CURSOR_TOP_LEFT_CORNER */
-    { XC_top_right_corner,    None, 0 }, /* GLUT_CURSOR_TOP_RIGHT_CORNER */
-    { XC_bottom_right_corner, None, 0 }, /* GLUT_CURSOR_BOTTOM_RIGHT_CORNER */
-    { XC_bottom_left_corner,  None, 0 }  /* GLUT_CURSOR_BOTTOM_LEFT_CORNER */
+    {XC_arrow, None, 0},               /* GLUT_CURSOR_RIGHT_ARROW */
+    {XC_top_left_arrow, None, 0},      /* GLUT_CURSOR_LEFT_ARROW */
+    {XC_hand1, None, 0},               /* GLUT_CURSOR_INFO */
+    {XC_pirate, None, 0},              /* GLUT_CURSOR_DESTROY */
+    {XC_question_arrow, None, 0},      /* GLUT_CURSOR_HELP */
+    {XC_exchange, None, 0},            /* GLUT_CURSOR_CYCLE */
+    {XC_spraycan, None, 0},            /* GLUT_CURSOR_SPRAY */
+    {XC_watch, None, 0},               /* GLUT_CURSOR_WAIT */
+    {XC_xterm, None, 0},               /* GLUT_CURSOR_TEXT */
+    {XC_crosshair, None, 0},           /* GLUT_CURSOR_CROSSHAIR */
+    {XC_sb_v_double_arrow, None, 0},   /* GLUT_CURSOR_UP_DOWN */
+    {XC_sb_h_double_arrow, None, 0},   /* GLUT_CURSOR_LEFT_RIGHT */
+    {XC_top_side, None, 0},            /* GLUT_CURSOR_TOP_SIDE */
+    {XC_bottom_side, None, 0},         /* GLUT_CURSOR_BOTTOM_SIDE */
+    {XC_left_side, None, 0},           /* GLUT_CURSOR_LEFT_SIDE */
+    {XC_right_side, None, 0},          /* GLUT_CURSOR_RIGHT_SIDE */
+    {XC_top_left_corner, None, 0},     /* GLUT_CURSOR_TOP_LEFT_CORNER */
+    {XC_top_right_corner, None, 0},    /* GLUT_CURSOR_TOP_RIGHT_CORNER */
+    {XC_bottom_right_corner, None, 0}, /* GLUT_CURSOR_BOTTOM_RIGHT_CORNER */
+    {XC_bottom_left_corner, None, 0}   /* GLUT_CURSOR_BOTTOM_LEFT_CORNER */
 };
 
-void fgPlatformSetCursor ( SFG_Window *window, int cursorID )
+void fgPlatformSetCursor(SFG_Window *window, int cursorID)
 {
     Cursor cursor;
     /*
@@ -100,29 +103,33 @@ void fgPlatformSetCursor ( SFG_Window *window, int cursorID )
      * window (or full-screen) crosshair, we might consider it.
      */
     int cursorIDToUse =
-        ( cursorID == GLUT_CURSOR_FULL_CROSSHAIR ) ? GLUT_CURSOR_CROSSHAIR : cursorID;
+        (cursorID == GLUT_CURSOR_FULL_CROSSHAIR) ? GLUT_CURSOR_CROSSHAIR : cursorID;
 
-    if( ( cursorIDToUse >= 0 ) &&
-        ( cursorIDToUse < sizeof( cursorCache ) / sizeof( cursorCache[0] ) ) ) {
-        cursorCacheEntry *entry = &cursorCache[ cursorIDToUse ];
+    if ((cursorIDToUse >= 0) &&
+        (cursorIDToUse < sizeof(cursorCache) / sizeof(cursorCache[0])))
+    {
+        cursorCacheEntry *entry = &cursorCache[cursorIDToUse];
 
-		/* the second clause forces an invalidation of the cached cursor, if it was
+        /* the second clause forces an invalidation of the cached cursor, if it was
 		 * created through a different display connection.
 		 * This can only happen, in the extremely rare case where the user program calls the
 		 * freeglut extension glutLeaveMainLoop, and then re-initializes freeglut and
 		 * starts over.
 		 */
-        if( entry->cachedCursor == None || entry->dpy != fgDisplay.pDisplay.Display ) {
+        if (entry->cachedCursor == None || entry->dpy != fgDisplay.pDisplay.Display)
+        {
             entry->cachedCursor =
-                XCreateFontCursor( fgDisplay.pDisplay.Display, entry->cursorShape );
-			entry->dpy = fgDisplay.pDisplay.Display;
-		}
+                XCreateFontCursor(fgDisplay.pDisplay.Display, entry->cursorShape);
+            entry->dpy = fgDisplay.pDisplay.Display;
+        }
         cursor = entry->cachedCursor;
-    } else {
-        switch( cursorIDToUse )
+    }
+    else
+    {
+        switch (cursorIDToUse)
         {
         case GLUT_CURSOR_NONE:
-            cursor = getEmptyCursor( );
+            cursor = getEmptyCursor();
             break;
 
         case GLUT_CURSOR_INHERIT:
@@ -130,32 +137,35 @@ void fgPlatformSetCursor ( SFG_Window *window, int cursorID )
             break;
 
         default:
-            fgError( "Unknown cursor type: %d", cursorIDToUse );
+            fgError("Unknown cursor type: %d", cursorIDToUse);
             return;
         }
     }
 
-    if ( cursorIDToUse == GLUT_CURSOR_INHERIT ) {
-        XUndefineCursor( fgDisplay.pDisplay.Display, window->Window.Handle );
-    } else if ( cursor != None ) {
-        XDefineCursor( fgDisplay.pDisplay.Display, window->Window.Handle, cursor );
-    } else if ( cursorIDToUse != GLUT_CURSOR_NONE ) {
-        fgError( "Failed to create cursor" );
+    if (cursorIDToUse == GLUT_CURSOR_INHERIT)
+    {
+        XUndefineCursor(fgDisplay.pDisplay.Display, window->Window.Handle);
+    }
+    else if (cursor != None)
+    {
+        XDefineCursor(fgDisplay.pDisplay.Display, window->Window.Handle, cursor);
+    }
+    else if (cursorIDToUse != GLUT_CURSOR_NONE)
+    {
+        fgError("Failed to create cursor");
     }
 }
 
-
-void fgPlatformWarpPointer ( int x, int y )
+void fgPlatformWarpPointer(int x, int y)
 {
     XWarpPointer(
         fgDisplay.pDisplay.Display,
         None,
         fgStructure.CurrentWindow->Window.Handle,
         0, 0, 0, 0,
-        x, y
-    );
+        x, y);
     /* Make the warp visible immediately. */
-    XFlush( fgDisplay.pDisplay.Display );
+    XFlush(fgDisplay.pDisplay.Display);
 }
 
 void fghPlatformGetCursorPos(const SFG_Window *window, GLboolean client, SFG_XYUse *mouse_pos)
@@ -163,16 +173,16 @@ void fghPlatformGetCursorPos(const SFG_Window *window, GLboolean client, SFG_XYU
     /* Get current pointer location in screen coordinates (if client is false or window is NULL), else
      * Get current pointer location relative to top-left of client area of window (if client is true and window is not NULL)
      */
-    Window w = (client && window && window->Window.Handle)? window->Window.Handle: fgDisplay.pDisplay.RootWindow;
+    Window w = (client && window && window->Window.Handle) ? window->Window.Handle : fgDisplay.pDisplay.RootWindow;
     Window junk_window;
     unsigned int junk_mask;
     int clientX, clientY;
 
     XQueryPointer(fgDisplay.pDisplay.Display, w,
-            &junk_window, &junk_window,
-            &mouse_pos->X, &mouse_pos->Y, /* Screen coords relative to root window's top-left */
-            &clientX, &clientY,           /* Client coords relative to window's top-left */
-            &junk_mask);
+                  &junk_window, &junk_window,
+                  &mouse_pos->X, &mouse_pos->Y, /* Screen coords relative to root window's top-left */
+                  &clientX, &clientY,           /* Client coords relative to window's top-left */
+                  &junk_mask);
 
     if (client && window && window->Window.Handle)
     {
