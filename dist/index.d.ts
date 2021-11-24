@@ -239,6 +239,9 @@ declare module '@devzolo/node-native-glut' {
     const GAME_MODE_REFRESH_RATE = 0x0005;
     const GAME_MODE_DISPLAY_CHANGED = 0x0006;
 
+
+    function getWindowHandle(): number;
+
     /*
      * Initialization functions
      */

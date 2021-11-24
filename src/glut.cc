@@ -1,4 +1,6 @@
 #include <napi.h>
+#include <limits.h>
+#include <math.h>
 
 // OpenGL Graphics Includes
 #include <GL/freeglut.h>
@@ -530,7 +532,7 @@ Napi::Value timerFunc(const Napi::CallbackInfo& info) {
   JS_INT_ARG(0, time);
   Napi::Function func = info[1].As<Napi::Function>();
   JS_INT_ARG(2, value);
-	glutTimerFunc(time, m_timerFunc, reinterpret_cast<int>(new TimerFunctionNode(func, value)));
+	//glutTimerFunc(time, m_timerFunc, reinterpret_cast<int>(new TimerFunctionNode(func, value)));
 	return env.Undefined();
 }
 
@@ -1570,14 +1572,14 @@ Napi::Value reportErrors(const Napi::CallbackInfo& info) {
 
 
 //  reportErrors(): void;
-Napi::Value sleep(const Napi::CallbackInfo& info) {
-	Napi::Env env = info.Env();
-	JS_ARGS(1);
-	JS_ARG_TYPE(0, String);
-	JS_INT_ARG(0, milliseconds);
-  Sleep(milliseconds);
-	return info.Env().Undefined();
-}
+// Napi::Value sleep(const Napi::CallbackInfo& info) {
+// 	Napi::Env env = info.Env();
+// 	JS_ARGS(1);
+// 	JS_ARG_TYPE(0, String);
+// 	JS_INT_ARG(0, milliseconds);
+//   Sleep(milliseconds);
+// 	return info.Env().Undefined();
+// }
 
 
 Napi::Value execState(const Napi::CallbackInfo& info) {
@@ -1598,6 +1600,11 @@ Napi::Value mainLoopEnd(const Napi::CallbackInfo& info) {
 	glutMainLoopEnd();
 	return info.Env().Undefined();
 }
+Napi::Value getWindowHandle(const Napi::CallbackInfo& info) {
+	int hwnd = glutGetWindowHandle();
+  return Napi::Number::New(info.Env(), (int)hwnd);
+}
+
 
 //
 
@@ -2043,13 +2050,14 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
 	JS_GLUT_SET_METHOD(reportErrors);
 
 
-	JS_GLUT_SET_METHOD(sleep);
+	// JS_GLUT_SET_METHOD(sleep);
 
 
 	JS_GLUT_SET_METHOD(execState);
 	JS_GLUT_SET_METHOD(mainLoopBegin);
 	JS_GLUT_SET_METHOD(mainLoopStep);
-	JS_GLUT_SET_METHOD(mainLoopEnd);
+
+  JS_GLUT_SET_METHOD(getWindowHandle);
 
   return exports;
 }

@@ -10,6 +10,7 @@ extern "C" {
   void  glutMainLoopBegin( void );
   void  glutMainLoopStep( void );
   void  glutMainLoopEnd( void );
+  int   glutGetWindowHandle( void );
 }
 
 #endif
