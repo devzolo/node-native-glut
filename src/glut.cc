@@ -1,7 +1,7 @@
 #include <napi.h>
-#include <limits.h>
 #include <math.h>
-
+#include <limits.h>
+#include <stdint.h>
 // OpenGL Graphics Includes
 #include <GL/freeglut.h>
 #include "glut_ext.hh"
@@ -514,7 +514,7 @@ class TimerFunctionNode {
 std::map<int, TimerFunctionNode> m_timerFuncNodes;
 
 void m_timerFunc(int timerNode) {
-  TimerFunctionNode* node = reinterpret_cast<TimerFunctionNode*>(timerNode);
+  TimerFunctionNode* node = (TimerFunctionNode*)timerNode;
   if(node != NULL) {
     node->m_timerFunc(node->value);
     delete node;
@@ -773,7 +773,7 @@ Napi::FunctionReference m_keyboardUpFuncCBRef;
 void m_keyboardUpFunc(unsigned char key, int x, int y) {
   if(!m_keyboardUpFuncCBRef.IsEmpty()) {
     m_keyboardUpFuncCBRef.Call({
-      Napi::Number::New(m_keyboardUpFuncCBRef.Env(), key),
+      Napi::String::New(m_keyboardFuncCBRef.Env(), (char*)&key),
       Napi::Number::New(m_keyboardUpFuncCBRef.Env(), x),
       Napi::Number::New(m_keyboardUpFuncCBRef.Env(), y)
     });

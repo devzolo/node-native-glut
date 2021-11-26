@@ -120,7 +120,7 @@ void FGAPIENTRY glutMainLoopEnd(void)
     exit(0);
 }
 
-int FGAPIENTRY glutGetWindowHandle(void)
+void * FGAPIENTRY glutGetWindowHandle(void)
 {
   SFG_Window *window = (SFG_Window *)fgStructure.Windows.First;
   if (window)

@@ -15,6 +15,7 @@
       "cflags!": [ "-fno-exceptions" ],
       "cflags_cc!": [ "-fno-exceptions" ],
       'sources': [
+
 		    "src/common.h",
         "src/framework.h",
 
@@ -46,6 +47,21 @@
         "deps/freeglut-3.2.1/src/fg_videoresize.c",
         "deps/freeglut-3.2.1/src/fg_window.c",
 
+        "deps/freeglut-3.2.1/src/mswin/fg_cursor_mswin.c",
+        "deps/freeglut-3.2.1/src/mswin/fg_display_mswin.c",
+        "deps/freeglut-3.2.1/src/mswin/fg_ext_mswin.c",
+        "deps/freeglut-3.2.1/src/mswin/fg_gamemode_mswin.c",
+        "deps/freeglut-3.2.1/src/mswin/fg_init_mswin.c",
+        "deps/freeglut-3.2.1/src/mswin/fg_internal_mswin.h",
+        "deps/freeglut-3.2.1/src/mswin/fg_input_devices_mswin.c",
+        "deps/freeglut-3.2.1/src/mswin/fg_joystick_mswin.c",
+        "deps/freeglut-3.2.1/src/mswin/fg_main_mswin.c",
+        "deps/freeglut-3.2.1/src/mswin/fg_menu_mswin.c",
+        "deps/freeglut-3.2.1/src/mswin/fg_spaceball_mswin.c",
+        "deps/freeglut-3.2.1/src/mswin/fg_state_mswin.c",
+        "deps/freeglut-3.2.1/src/mswin/fg_structure_mswin.c",
+        "deps/freeglut-3.2.1/src/mswin/fg_window_mswin.c",
+
         "deps/freeglut-3.2.1/src/fg_font.c",
         "deps/freeglut-3.2.1/src/fg_menu.c",
 
@@ -56,24 +72,6 @@
         "src/glut.cc",
       ],
       "conditions":[
-        ["OS=='win'", {
-      	  "sources": [
-            "deps/freeglut-3.2.1/src/mswin/fg_cursor_mswin.c",
-            "deps/freeglut-3.2.1/src/mswin/fg_display_mswin.c",
-            "deps/freeglut-3.2.1/src/mswin/fg_ext_mswin.c",
-            "deps/freeglut-3.2.1/src/mswin/fg_gamemode_mswin.c",
-            "deps/freeglut-3.2.1/src/mswin/fg_init_mswin.c",
-            "deps/freeglut-3.2.1/src/mswin/fg_internal_mswin.h",
-            "deps/freeglut-3.2.1/src/mswin/fg_input_devices_mswin.c",
-            "deps/freeglut-3.2.1/src/mswin/fg_joystick_mswin.c",
-            "deps/freeglut-3.2.1/src/mswin/fg_main_mswin.c",
-            "deps/freeglut-3.2.1/src/mswin/fg_menu_mswin.c",
-            "deps/freeglut-3.2.1/src/mswin/fg_spaceball_mswin.c",
-            "deps/freeglut-3.2.1/src/mswin/fg_state_mswin.c",
-            "deps/freeglut-3.2.1/src/mswin/fg_structure_mswin.c",
-            "deps/freeglut-3.2.1/src/mswin/fg_window_mswin.c",
-          ]
-      	}],
       	["OS=='linux'", {
       	  "sources": [
             "deps/freeglut-3.2.1/src/x11/fg_cursor_x11.c",
@@ -100,8 +98,17 @@
       	  "sources": []
       	}]
       ],
-      'defines' : ['NAPI_DISABLE_CPP_EXCEPTIONS', 'FREEGLUT_EXPORTS', 'FREEGLUT_PRINT_ERRORS', '_WIN32_WINNT=0x0501','INT_MAX=0x7fffffff'],
-      'libraries': ['libX11'],
+      'defines' : ['NAPI_DISABLE_CPP_EXCEPTIONS', 'FREEGLUT_EXPORTS', 'FREEGLUT_PRINT_ERRORS', '_WIN32_WINNT=0x0501'],
+      'libraries': [],
+      "conditions":[
+        ["OS=='win'", {
+          'libraries': ['opengl32'],
+        }],
+        ["OS=='linux'", {
+          'defines': ['INT_MAX=0x7fffffff'],
+          'libraries': [],
+        }]
+      ],
       "include_dirs": [
         "./deps/freeglut-3.2.1/include",
         "./deps/freeglut-3.2.1/src",
