@@ -35,5 +35,8 @@ exports.GLUT.mainLoop = function () {
         exports.GLUT.mainLoopEnd();
     });
 };
+exports.GLUT.timerFunc = function (time, cb, value) {
+    setTimeout(cb, time, value);
+};
 exports.default = exports.GLUT;
 //# sourceMappingURL=index.js.map
