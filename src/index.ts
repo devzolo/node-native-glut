@@ -1,7 +1,7 @@
 import path from 'path';
 export const GLUT = require(path.join(__dirname, '..', 'bin', process.platform, process.arch, 'native-glut.node'));
 
-GLUT.mainLoop = async function(): Promise<void> {
+GLUT.mainLoop = async function (): Promise<void> {
   GLUT.mainLoopBegin();
   await new Promise<void>(resolve => {
     const mainLoop = (): void => {
@@ -18,5 +18,9 @@ GLUT.mainLoop = async function(): Promise<void> {
   });
   GLUT.mainLoopEnd();
 };
+
+GLUT.timerFunc = function (time: number, cb: (value: number) => void, value: number): void {
+  setTimeout(cb, time, value);
+}
 
 export default GLUT;

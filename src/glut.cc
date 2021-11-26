@@ -488,53 +488,53 @@ Napi::Value detachMenu(const Napi::CallbackInfo& info) {
  * Global callback functions, see fg_callbacks.c
  */
 
-class TimerFunctionNode {
-  public:
+// class TimerFunctionNode {
+//   public:
 
-  Napi::FunctionReference ref;
-  int value;
+//   Napi::FunctionReference ref;
+//   int value;
 
-  TimerFunctionNode(Napi::Function func, int value): value(value) {
-    ref = Napi::Persistent(func);
-    ref.SuppressDestruct();
-  }
+//   TimerFunctionNode(Napi::Function func, int value): value(value) {
+//     ref = Napi::Persistent(func);
+//     ref.SuppressDestruct();
+//   }
 
-  ~TimerFunctionNode() {
-    ref.Unref();
-  }
+//   ~TimerFunctionNode() {
+//     ref.Unref();
+//   }
 
-  void m_timerFunc(int value) {
-    if(!ref.IsEmpty()) {
-     ref.Call({ Napi::Number::New(ref.Env(), value) });
-    }
-    delete this;
-  }
-};
+//   void m_timerFunc(int value) {
+//     if(!ref.IsEmpty()) {
+//      ref.Call({ Napi::Number::New(ref.Env(), value) });
+//     }
+//     delete this;
+//   }
+// };
 
-std::map<int, TimerFunctionNode> m_timerFuncNodes;
+// std::map<int, TimerFunctionNode> m_timerFuncNodes;
 
-void m_timerFunc(int timerNode) {
-  TimerFunctionNode* node = (TimerFunctionNode*)timerNode;
-  if(node != NULL) {
-    node->m_timerFunc(node->value);
-    delete node;
-  }
-}
+// void m_timerFunc(int timerNode) {
+//   TimerFunctionNode* node = (TimerFunctionNode*)timerNode;
+//   if(node != NULL) {
+//     node->m_timerFunc(node->value);
+//     delete node;
+//   }
+// }
 
 // void timerFunc( unsigned int time, void (* callback)( int ), int value );
-Napi::Value timerFunc(const Napi::CallbackInfo& info) {
-	Napi::Env env = info.Env();
+// Napi::Value timerFunc(const Napi::CallbackInfo& info) {
+// 	Napi::Env env = info.Env();
 
-	JS_ARGS(3);
-	JS_ARG_TYPE(0, Number);
-  JS_ARG_TYPE(1, Function);
-  JS_ARG_TYPE(2, Number);
-  JS_INT_ARG(0, time);
-  Napi::Function func = info[1].As<Napi::Function>();
-  JS_INT_ARG(2, value);
-	//glutTimerFunc(time, m_timerFunc, reinterpret_cast<int>(new TimerFunctionNode(func, value)));
-	return env.Undefined();
-}
+// 	JS_ARGS(3);
+// 	JS_ARG_TYPE(0, Number);
+//   JS_ARG_TYPE(1, Function);
+//   JS_ARG_TYPE(2, Number);
+//   JS_INT_ARG(0, time);
+//   Napi::Function func = info[1].As<Napi::Function>();
+//   JS_INT_ARG(2, value);
+// 	glutTimerFunc(time, m_timerFunc, reinterpret_cast<int>(new TimerFunctionNode(func, value)));
+// 	return env.Undefined();
+// }
 
 Napi::FunctionReference m_idleFuncCBRef;
 
@@ -570,7 +570,7 @@ Napi::FunctionReference m_keyboardFuncCBRef;
 void m_keyboardFunc(unsigned char key, int x, int y) {
   if(!m_keyboardFuncCBRef.IsEmpty()) {
     m_keyboardFuncCBRef.Call({
-      Napi::String::New(m_keyboardFuncCBRef.Env(), (char*)&key),
+      Napi::String::New(m_keyboardFuncCBRef.Env(), std::string(1, key)),
       Napi::Number::New(m_keyboardFuncCBRef.Env(), x),
       Napi::Number::New(m_keyboardFuncCBRef.Env(), y)
     });
@@ -773,7 +773,8 @@ Napi::FunctionReference m_keyboardUpFuncCBRef;
 void m_keyboardUpFunc(unsigned char key, int x, int y) {
   if(!m_keyboardUpFuncCBRef.IsEmpty()) {
     m_keyboardUpFuncCBRef.Call({
-      Napi::String::New(m_keyboardFuncCBRef.Env(), (char*)&key),
+      //CONVERT A SINGLE CHAR TO A STRING
+      Napi::String::New(m_keyboardUpFuncCBRef.Env(), std::string(1, key)),
       Napi::Number::New(m_keyboardUpFuncCBRef.Env(), x),
       Napi::Number::New(m_keyboardUpFuncCBRef.Env(), y)
     });
@@ -1935,7 +1936,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
 	/*
 	 * Global callback functions, see fg_callbacks.c
 	 */
-	JS_GLUT_SET_METHOD(timerFunc);
+	// JS_GLUT_SET_METHOD(timerFunc);
 	JS_GLUT_SET_METHOD(idleFunc);
 
 	/*
