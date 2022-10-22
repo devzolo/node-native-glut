@@ -7,5 +7,5 @@ services:
     # run yarn install, yarn test, and yarn build with sh -c
     command: >
       sh -c "yarn"
-    # volumes:
-    #   - ./src:/usr/src/module/src
+    volumes:
+      # - ./bin/:/usr/src/app/bin/
