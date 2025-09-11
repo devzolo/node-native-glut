@@ -1,5 +1,3 @@
-version: "3.6"
-
 services:
   node-linux-builder:
     container_name: node-linux-builder
@@ -7,5 +5,5 @@ services:
     # run yarn install, yarn test, and yarn build with sh -c
     command: >
       sh -c "yarn"
-    volumes:
+    # volumes:
       # - ./bin/:/usr/src/app/bin/

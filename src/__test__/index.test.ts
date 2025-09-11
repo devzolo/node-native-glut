@@ -1,7 +1,8 @@
-import exemple from '..';
+import assert from "node:assert";
+import { describe, it } from "node:test";
 
-describe('Example Test', () => {
-  it('1 == 1', () => {
-    expect(1).toEqual(1);
-  });
+describe("Example Test", () => {
+	it("1 == 1", () => {
+		assert.strictEqual(1, 1);
+	});
 });
