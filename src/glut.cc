@@ -52,7 +52,7 @@ Napi::Value init(const Napi::CallbackInfo& info) {
 	int myargc = 1;
 	myargv[0] = strdup("NodeApp");
 	glutInit(&myargc, myargv);
-  return info.Env().Undefined();
+  return env.Undefined();
 }
 
 // initWindowPosition(x: number, y: number): void;
@@ -1099,7 +1099,7 @@ Napi::Value deviceGet(const Napi::CallbackInfo& info) {
 // int  getModifiers( void );
 Napi::Value getModifiers(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-	return Napi::Number::New(info.Env(), glutGetModifiers());
+	return Napi::Number::New(env, glutGetModifiers());
 }
 
 // int  layerGet( GLenum query );
@@ -1585,7 +1585,7 @@ Napi::Value reportErrors(const Napi::CallbackInfo& info) {
 
 Napi::Value execState(const Napi::CallbackInfo& info) {
 	Napi::Env env = info.Env();
-	return Napi::Number::New(info.Env(), glutExecState());
+	return Napi::Number::New(env, glutExecState());
 }
 
 

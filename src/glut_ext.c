@@ -1,5 +1,6 @@
 #include <GL/freeglut.h>
 #include <fg_internal.h>
+#include <limits.h>
 
 extern void fgPlatformSleepForEvents(fg_time_t msec);
 extern void fgPlatformMainLoopPreliminaryWork(void);
@@ -66,8 +67,6 @@ int FGAPIENTRY glutExecState(void)
 
 void FGAPIENTRY glutMainLoopBegin(void)
 {
-  int action;
-
   FREEGLUT_EXIT_IF_NOT_INITIALISED("glutMainLoop");
 
   if (!fgStructure.Windows.First)
@@ -124,6 +123,6 @@ void * FGAPIENTRY glutGetWindowHandle(void)
 {
   SFG_Window *window = (SFG_Window *)fgStructure.Windows.First;
   if (window)
-    return window->Window.Handle;
+    return (void *)window->Window.Handle;
   return NULL;
 }
